@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,10 +21,12 @@ import com.hcl.ing.retialbank.app.dto.AccountSummaryResponse;
 import com.hcl.ing.retialbank.app.dto.AccountUpdateRequest;
 import com.hcl.ing.retialbank.app.dto.AccountUpdateResponse;
 import com.hcl.ing.retialbank.app.dto.CustomerDTO;
+import com.hcl.ing.retialbank.app.dto.DeleteResponse;
 import com.hcl.ing.retialbank.app.dto.OtpRequest;
 import com.hcl.ing.retialbank.app.dto.SearchRequest;
 import com.hcl.ing.retialbank.app.dto.TransactionDto;
 import com.hcl.ing.retialbank.app.dto.UserResponse;
+import com.hcl.ing.retialbank.app.pojo.ManagePayeePojo;
 import com.hcl.ing.retialbank.app.service.AccountServiceImpl;
 import com.hcl.ing.retialbank.app.service.CustomerServiceImpl;
 import com.hcl.ing.retialbank.app.service.ExcelGenerator;
@@ -87,7 +90,12 @@ public class AccountController {
 		
 		return "otp generated successfully";
 	}
-
+	@DeleteMapping("/payee/deletepayee")
+	public  DeleteResponse deletepayee(@RequestBody ManagePayeePojo managePayeePojo) {
+		DeleteResponse response=accountServiceImpl.deletepayee(managePayeePojo);
+		
+		return response;
+	}
 
 }
 
