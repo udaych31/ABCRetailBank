@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hcl.ing.retialbank.app.dto.CustomerResponse;
 import com.hcl.ing.retialbank.app.service.CustomerService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 public class CustomerController {
 	
@@ -17,6 +19,9 @@ public class CustomerController {
 	CustomerService customerService;
 	
 	@PostMapping("/customerOrAdminLogin")
+	@ApiOperation(
+		value = "Customer or Admin login",
+	    notes = "If it is success it returns a login successfull message else it gives error message")
 	public ResponseEntity<String> custOrAdminLogin(@RequestParam String userName,@RequestParam String password)
 	{
 		CustomerResponse customerResponse=customerService.loginUser(userName, password);
@@ -24,7 +29,9 @@ public class CustomerController {
 		
 	}
 	
-	
+	@ApiOperation(
+			value = "Customer or Admin can change the password",
+		    notes = "If it is success it returns a password changed successfull message else it gives error message")
 	@PostMapping("/changePassword")
 	public ResponseEntity<String> changePassword(@RequestParam String userName,@RequestParam String password)
 	{

@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table
-public class ManagePayee implements Serializable {
+public class TempPayee implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -31,7 +31,7 @@ public class ManagePayee implements Serializable {
 	@Column
 	private String nickName;
 	
-	public ManagePayee() {
+	public TempPayee() {
 		super();
 	}
 
