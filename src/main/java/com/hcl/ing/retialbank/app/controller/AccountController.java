@@ -20,6 +20,7 @@ import com.hcl.ing.retialbank.app.dto.AccountSummaryResponse;
 import com.hcl.ing.retialbank.app.dto.AccountUpdateRequest;
 import com.hcl.ing.retialbank.app.dto.AccountUpdateResponse;
 import com.hcl.ing.retialbank.app.dto.CustomerDTO;
+import com.hcl.ing.retialbank.app.dto.OtpRequest;
 import com.hcl.ing.retialbank.app.dto.SearchRequest;
 import com.hcl.ing.retialbank.app.dto.TransactionDto;
 import com.hcl.ing.retialbank.app.dto.UserResponse;
@@ -79,6 +80,14 @@ public class AccountController {
 		
 		return response;
 	}
+	
+	@GetMapping("/sendotp")
+	public  String accountDetails(@RequestBody OtpRequest request) {
+		accountServiceImpl.sendOtp(request);
+		
+		return "otp generated successfully";
+	}
+
 
 }
 
