@@ -21,10 +21,11 @@ public class PayeeServiceImpl implements PayeeService{
 	public List<ManagePayeeDto> getPayeesList(Long accountNo) {
 		 List<ManagePayeeDto> response=new ArrayList<ManagePayeeDto>();
 		try {
-			List<ManagePayee> list = payeeRepository.findByPayeeId(accountNo);
+			List<ManagePayee> list = payeeRepository.findByAccountNo(accountNo);
 			if(!list.isEmpty()) {
 				list.stream().forEach(payee ->{
 					ManagePayeeDto dto=new ManagePayeeDto();
+					dto.setPayeeId(payee.getPayeeId());
 					dto.setAccountNo(payee.getAccountNo());					
 					dto.setPayeeAccountNo(payee.getPayeeAccountNo());
 					dto.setPayeeName(payee.getPayeeName());

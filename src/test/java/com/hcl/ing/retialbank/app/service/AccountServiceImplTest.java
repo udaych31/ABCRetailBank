@@ -17,9 +17,8 @@ import com.hcl.ing.retialbank.app.dto.AccountUpdateRequest;
 import com.hcl.ing.retialbank.app.dto.AccountUpdateResponse;
 import com.hcl.ing.retialbank.app.dto.ManagePayeeDto;
 import com.hcl.ing.retialbank.app.dto.SearchRequest;
-import com.hcl.ing.retialbank.app.dto.TransactionDto;
 import com.hcl.ing.retialbank.app.entity.AccountSummary;
-import com.hcl.ing.retialbank.app.entity.Transaction;
+import com.hcl.ing.retialbank.app.entity.ManagePayee;
 import com.hcl.ing.retialbank.app.repository.AccountSummaryRepository;
 import com.hcl.ing.retialbank.app.repository.PayeeRepository;
 
@@ -91,29 +90,27 @@ public class AccountServiceImplTest {
 	@Test
 	public void testPayeesList() {
 		
-//		List<ManagePayeeDto> list=new ArrayList<ManagePayeeDto>();
-//		
-//		ManagePayeeDto dto=new ManagePayeeDto();
-//		dto.setAccountNo(1L);
-//		dto.setPayeeAccountNo(2L);
-//		dto.setFromAccountNumber(1234L);
-//		dto.setTransactionAmount(2000.00);
-//		dto.setTransactionId(2l);		
-//		list.add(dto);
-//		
-//		
-//		List<Transaction> trasactionLists=new ArrayList<Transaction>();
-//		Transaction transaction=new Transaction();
-//		transaction.setAccountNumber(1L);
-//		transaction.setClosingBalance(1000.00);
-//		transaction.setFromAccountNumber(1234L);
-//		transaction.setTransactionAmount(2000.00);
-//		transaction.setTransactionId(2l);		
-//		trasactionLists.add(transaction);
-//		
-//		when(payeeRepository.findTransactions(1L)).thenReturn(trasactionLists);
-//		 List<TransactionDto> payesList = payeeServiceImpl.getPayeesList(1L);
-//		assertEquals(list, payesList);
+		List<ManagePayeeDto> list=new ArrayList<ManagePayeeDto>();		
+		ManagePayeeDto dto=new ManagePayeeDto();
+		dto.setPayeeId(2L);
+		dto.setAccountNo(12L);
+		dto.setPayeeAccountNo(1234L);
+		dto.setPayeeName("Hari");
+		dto.setNickName("priya");				
+		list.add(dto);		
+		
+		List<ManagePayee> managePayeeLists=new ArrayList<ManagePayee>();
+		ManagePayee managePayee=new ManagePayee();
+		managePayee.setPayeeId(2L);
+		managePayee.setAccountNo(12L);
+		managePayee.setPayeeAccountNo(1234L);
+		managePayee.setPayeeName("Hari");
+		managePayee.setNickName("priya");		
+		managePayeeLists.add(managePayee);
+		
+		when(payeeRepository.findByAccountNo(1234L)).thenReturn(managePayeeLists);
+		 List<ManagePayeeDto> payesList = payeeServiceImpl.getPayeesList(1234L);
+		assertEquals(list.size(), payesList.size());
 		
 	}
 	
