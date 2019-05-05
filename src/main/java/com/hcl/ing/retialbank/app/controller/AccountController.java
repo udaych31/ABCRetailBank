@@ -22,7 +22,7 @@ import com.hcl.ing.retialbank.app.dto.AccountUpdateResponse;
 import com.hcl.ing.retialbank.app.dto.AddPayeeReference;
 import com.hcl.ing.retialbank.app.dto.ConfirmPayeeRequest;
 import com.hcl.ing.retialbank.app.dto.CustomerDTO;
-import com.hcl.ing.retialbank.app.dto.ManagePayeeDTO;
+import com.hcl.ing.retialbank.app.dto.ManagePayeeDto;
 import com.hcl.ing.retialbank.app.dto.OtpRequest;
 import com.hcl.ing.retialbank.app.dto.SearchRequest;
 import com.hcl.ing.retialbank.app.dto.TransactionDto;
@@ -31,6 +31,7 @@ import com.hcl.ing.retialbank.app.service.AccountServiceImpl;
 import com.hcl.ing.retialbank.app.service.AddPayeeServiceImpl;
 import com.hcl.ing.retialbank.app.service.CustomerServiceImpl;
 import com.hcl.ing.retialbank.app.service.ExcelGenerator;
+import com.hcl.ing.retialbank.app.service.PayeeServiceImpl;
 
 @RestController
 @RequestMapping("/account")
@@ -44,6 +45,9 @@ public class AccountController {
 	
 	@Autowired
 	private AddPayeeServiceImpl addPayeeService;
+	
+	@Autowired
+	private PayeeServiceImpl payeeServiceImpl;
 	
 	@PostMapping("/searchbyaccnoaccname")
 	public AccountSummaryResponse searchByAccountNoOrAccountName(@RequestBody SearchRequest request) {
@@ -88,6 +92,11 @@ public class AccountController {
 		return response;
 	}
 	
+	
+	@GetMapping("/getPayeesList")
+	public List<ManagePayeeDto> getPayeesList(@RequestParam("accountNo") Long accountNo){
+		return payeeServiceImpl.getPayeesList(accountNo);
+	}
 	@GetMapping("/sendotp")
 	public  String accountDetails(@RequestBody OtpRequest request) {
 		accountServiceImpl.sendOtp(request);
@@ -95,7 +104,7 @@ public class AccountController {
 	}
 	
 	@PostMapping("/addpayee")
-	public  AddPayeeReference addPayee(@RequestBody ManagePayeeDTO managePayeeDTO) {
+	public  AddPayeeReference addPayee(@RequestBody ManagePayeeDto managePayeeDTO) {
 		AddPayeeReference response=addPayeeService.addPayee(managePayeeDTO);	
 		return response;
 	}

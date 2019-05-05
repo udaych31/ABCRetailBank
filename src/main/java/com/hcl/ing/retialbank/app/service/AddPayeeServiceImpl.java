@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.hcl.ing.retialbank.app.dto.AddPayeeReference;
 import com.hcl.ing.retialbank.app.dto.ConfirmPayeeRequest;
-import com.hcl.ing.retialbank.app.dto.ManagePayeeDTO;
+import com.hcl.ing.retialbank.app.dto.ManagePayeeDto;
 import com.hcl.ing.retialbank.app.dto.OtpRequest;
 import com.hcl.ing.retialbank.app.dto.ValidateOtpRequest;
 import com.hcl.ing.retialbank.app.entity.AccountSummary;
@@ -37,7 +37,7 @@ public class AddPayeeServiceImpl implements AddPayeeService {
 	private OtpRepository otpRepository;
 
 	@Override
-	public AddPayeeReference addPayee(ManagePayeeDTO payee) {
+	public AddPayeeReference addPayee(ManagePayeeDto payee) {
 		AddPayeeReference reference=new  AddPayeeReference();
 		TempPayee managePayee = new TempPayee();
 		AccountSummary account = accountRepository.findByAccountNo(payee.getAccountNo());
