@@ -9,7 +9,6 @@ public class ManagePayeeDto {
 	
 	private String payeeName;
 	
-	
 	private Long payeeAccountNo;
 	
 	private String nickName;
