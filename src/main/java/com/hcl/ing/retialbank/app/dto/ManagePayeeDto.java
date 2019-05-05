@@ -1,5 +1,7 @@
 package com.hcl.ing.retialbank.app.dto;
 
+import javax.persistence.Column;
+
 public class ManagePayeeDto {
 	
 	
