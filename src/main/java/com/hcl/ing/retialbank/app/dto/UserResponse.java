@@ -4,6 +4,7 @@ public class UserResponse {
 	
 	private String userName;
 	private String password;
+	private String message;
 	
 	public String getUserName() {
 		return userName;
@@ -18,7 +19,12 @@ public class UserResponse {
 		this.password = password;
 	}
 	
-	
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

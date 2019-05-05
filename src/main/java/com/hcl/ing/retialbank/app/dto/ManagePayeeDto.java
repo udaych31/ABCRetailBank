@@ -13,7 +13,7 @@ public class ManagePayeeDto implements Serializable {
 	
 	private String payeeName;
 	
-	private String payeeAccountNo;
+	private Long payeeAccountNo;
 	
 	private String nickName;
 	
@@ -45,11 +45,11 @@ public class ManagePayeeDto implements Serializable {
 		this.payeeName = payeeName;
 	}
 
-	public String getPayeeAccountNo() {
+	public Long getPayeeAccountNo() {
 		return payeeAccountNo;
 	}
 
-	public void setPayeeAccountNo(String payeeAccountNo) {
+	public void setPayeeAccountNo(Long payeeAccountNo) {
 		this.payeeAccountNo = payeeAccountNo;
 	}
 

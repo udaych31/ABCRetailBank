@@ -2,6 +2,7 @@ package com.hcl.ing.retialbank.app.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,11 +19,14 @@ public class ManagePayee implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long payeeId;
 	
+	@Column
 	private Long accountNo;
 	
+	@Column
 	private String payeeName;
 	
-	private String payeeAccountNo;
+	@Column
+	private Long payeeAccountNo;
 	
 	private String nickName;
 	
@@ -54,11 +58,11 @@ public class ManagePayee implements Serializable {
 		this.payeeName = payeeName;
 	}
 
-	public String getPayeeAccountNo() {
+	public Long getPayeeAccountNo() {
 		return payeeAccountNo;
 	}
 
-	public void setPayeeAccountNo(String payeeAccountNo) {
+	public void setPayeeAccountNo(Long payeeAccountNo) {
 		this.payeeAccountNo = payeeAccountNo;
 	}
 

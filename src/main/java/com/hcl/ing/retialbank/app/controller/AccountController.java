@@ -21,6 +21,7 @@ import com.hcl.ing.retialbank.app.dto.AccountUpdateRequest;
 import com.hcl.ing.retialbank.app.dto.AccountUpdateResponse;
 import com.hcl.ing.retialbank.app.dto.CustomerDTO;
 import com.hcl.ing.retialbank.app.dto.ManagePayeeDto;
+import com.hcl.ing.retialbank.app.dto.OtpRequest;
 import com.hcl.ing.retialbank.app.dto.SearchRequest;
 import com.hcl.ing.retialbank.app.dto.TransactionDto;
 import com.hcl.ing.retialbank.app.dto.UserResponse;
@@ -90,6 +91,13 @@ public class AccountController {
 	public List<ManagePayeeDto> getPayeesList(@RequestParam("accountNo") Long accountNo){
 		return payeeServiceImpl.getPayeesList(accountNo);
 	}
+	@GetMapping("/sendotp")
+	public  String accountDetails(@RequestBody OtpRequest request) {
+		accountServiceImpl.sendOtp(request);
+		
+		return "otp generated successfully";
+	}
+
 
 }
 

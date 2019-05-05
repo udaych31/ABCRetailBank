@@ -11,6 +11,7 @@ public class CustomerDTO {
 		private String branchName;
 		private Double closingBalance;
 		private String role;
+		private String emailId;
 
 
 		public String getAccountType() {
@@ -69,5 +70,12 @@ public class CustomerDTO {
 			this.role = role;
 		}
 
+		public String getEmailId() {
+			return emailId;
+		}
+
+		public void setEmailId(String emailId) {
+			this.emailId = emailId;
+		}
 
 }
