@@ -1,10 +1,8 @@
 package com.hcl.ing.retialbank.app.dto;
 
-import javax.persistence.Column;
-
 public class ManagePayeeDto {
 	
-	
+	private Long payeeId;
 	
 	private Long accountNo;
 	
@@ -46,6 +44,14 @@ public class ManagePayeeDto {
 
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
+	}
+
+	public Long getPayeeId() {
+		return payeeId;
+	}
+
+	public void setPayeeId(Long payeeId) {
+		this.payeeId = payeeId;
 	}
 
 	
