@@ -80,48 +80,68 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public UserResponse createAccount(CustomerDTO customerDto) {
-
-		Transaction transaction = new Transaction();
-		AccountSummary createAcct = new AccountSummary();
-		CustomerInfo customer = new CustomerInfo();
-		UserResponse response = new UserResponse();
-
-		createAcct.setAccountName(customerDto.getAccountName());
-		createAcct.setAccountType(customerDto.getAccountType());
-		createAcct.setAddress(customerDto.getAddress());
-		createAcct.setBranchName(customerDto.getBranchName());
-		createAcct.setClosingBalance(customerDto.getClosingBalance());
-		createAcct.setDob(customerDto.getDob());
-		createAcct.setRole(customerDto.getRole());
-		createAcct.setCreateDt(new Date());
-
-		AccountSummary accountDetails = accoutRespository.save(createAcct);
-
-		if (accountDetails != null) {
-			transaction.setAccountNumber(accountDetails.getAccountNo());
+		
+		  Transaction transaction=new Transaction();	  
+		  AccountSummary  createAcct=new AccountSummary();
+		  CustomerInfo  customer=new CustomerInfo();
+		  UserResponse  response=new UserResponse();
+	
+		 try {
+			
+		 if(customerDto.getEmailId()!=null && customerDto.getEmailId().contains("@gmail.com")) {
+		 createAcct.setAccountName(customerDto.getAccountName());
+		 createAcct.setAccountType(customerDto.getAccountType());
+		 createAcct.setAddress(customerDto.getAddress());
+		 createAcct.setBranchName(customerDto.getBranchName());
+		 createAcct.setClosingBalance(customerDto.getClosingBalance());
+		 createAcct.setDob(customerDto.getDob());
+		 createAcct.setRole(customerDto.getRole());
+		 createAcct.setCreateDt(new Date());
+		 createAcct.setEmail(customerDto.getEmailId());
+		 AccountSummary accountDetails= accoutRespository.save(createAcct);
+		 
+		  
+		   
+		  if(accountDetails!=null)
+		  customer.setAccno(accountDetails.getAccountNo());
+          customer.setCustomerAccess('F');
+		  customer.setCustomerName(customerDto.getAccountName());
+		  customer.setCustomerType(customerDto.getRole());
+		  customer.setUserName(customerDto.getAccountName().concat("sder"));
+		  customer.setPassword(customerDto.getBranchName().concat("5645324"));
+		  customerRepository.save(customer);
+		  
+		  if(accountDetails!=null) 
+			   transaction.setAccountNumber(accountDetails.getAccountNo());			 	   
+			   transaction.setClosingBalance(customerDto.getClosingBalance());
+			   transaction.setTransactionAmount(customerDto.getClosingBalance());
+			   transaction.setTransactionDate(new Date());
+			   transaction.setTransactionRemarks("Opening Account");
+			   transaction.setTransactionType("Crerdit");
+			   transationRepository.save(transaction);
+			 
+		  
+		 response.setPassword(customer.getPassword());
+		 response.setUserName(customer.getUserName());
+		 response.setMessage("Account created successfully");
+		 
+		 }
+		 
+		 else {
+			 
+		     response.setMessage("Please provide email id or Provided emailId is not in format of mail");
+		 }
+		 }
+		 catch (Exception e) {
+			// TODO: handle exception
 		}
-
-		transaction.setClosingBalance(customerDto.getClosingBalance());
-		transaction.setTransactionAmount(customerDto.getClosingBalance());
-		transaction.setTransactionDate(new Date());
-		transaction.setTransactionRemarks("Opening Account");
-		transaction.setTransactionType("Crerdit");
-		transationRepository.save(transaction);
-
-		if (accountDetails != null)
-			customer.setAccno(accountDetails.getAccountNo());
-		customer.setCustomerAccess('F');
-		customer.setCustomerName(customerDto.getAccountName());
-		customer.setCustomerType(customerDto.getRole());
-		customer.setUserName(customerDto.getAccountName().concat("sder"));
-		customer.setPassword(customerDto.getBranchName().concat("5645324"));
-		customerRepository.save(customer);
-
-		response.setPassword(customer.getPassword());
-		response.setUserName(customer.getUserName());
-
-		return response;
+		 return response;
+		
 	}
+
+
+		
+		
 
 	@Override
 	public AccountResponse accountDetails(String userName) {

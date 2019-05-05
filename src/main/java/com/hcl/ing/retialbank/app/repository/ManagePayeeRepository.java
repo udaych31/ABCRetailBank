@@ -10,7 +10,9 @@ import com.hcl.ing.retialbank.app.entity.ManagePayee;
 @Repository
 public interface ManagePayeeRepository extends JpaRepository<ManagePayee, Long>{
 
-	ManagePayee findByAccountNo(Long payeeAccountNo);
+	
     ManagePayee findByPayeeAccountNo(Long payeeAccountNo);
+
+	public ManagePayee findByAccountNo(Long accno);
 
 }

@@ -14,6 +14,7 @@ import com.hcl.ing.retialbank.app.dto.DeleteResponse;
 import com.hcl.ing.retialbank.app.dto.OtpRequest;
 import com.hcl.ing.retialbank.app.dto.SearchRequest;
 import com.hcl.ing.retialbank.app.dto.TransactionDto;
+import com.hcl.ing.retialbank.app.dto.ValidateOtpRequest;
 import com.hcl.ing.retialbank.app.entity.AccountSummary;
 import com.hcl.ing.retialbank.app.entity.ManagePayee;
 import com.hcl.ing.retialbank.app.entity.OtpDetails;
@@ -44,7 +45,6 @@ public class AccountServiceImpl implements AccountService {
 	ManagePayeeRepository managePayeeRepository;
 	@Autowired
 	OtpRepository otpRepository;
-
 	@Override
 	public AccountSummaryResponse searchByAccountNoOrAccountName(SearchRequest request) {
 		AccountSummaryResponse response = new AccountSummaryResponse();
@@ -138,12 +138,14 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public void sendOtp(OtpRequest request) {
+	public boolean sendOtp(OtpRequest request) {
 		try {
 			emailSender.sendOtp(request);
+			return true;
 		} catch (Exception e) {
 
 		}
+		return false;
 	}
 
 	public DeleteResponse deletepayee(ManagePayeePojo managePayeePojo) {
@@ -174,6 +176,24 @@ public class AccountServiceImpl implements AccountService {
 		} else {
 			deleteResponse.setMessage("account numbers not exist");
 		}
+
 		return deleteResponse;
+
+		
 	}
+	
+	@Override
+	public OtpDetails validateOtp(ValidateOtpRequest request) {
+		OtpDetails otp=null;
+		try {
+			otp = otpRepository.findByAccountNo(request.getAccountNo());
+			if(otp!=null && otp.getOtp()==request.getOtp()) {
+				return otp;
+			}
+		} catch (Exception e) {
+		}
+		return otp;
+
+	}
+	
 }

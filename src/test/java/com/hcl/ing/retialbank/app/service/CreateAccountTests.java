@@ -13,9 +13,10 @@ import com.hcl.ing.retialbank.app.dto.CustomerDTO;
 import com.hcl.ing.retialbank.app.dto.UserResponse;
 import com.hcl.ing.retialbank.app.entity.AccountSummary;
 import com.hcl.ing.retialbank.app.entity.CustomerInfo;
+import com.hcl.ing.retialbank.app.entity.Transaction;
 import com.hcl.ing.retialbank.app.repository.AccountSummaryRepository;
 import com.hcl.ing.retialbank.app.repository.CustomerRepository;
-import com.hcl.ing.retialbank.app.repository.TransactionRepository;
+
 
 @RunWith(MockitoJUnitRunner.class)
 public class CreateAccountTests {
@@ -23,9 +24,9 @@ public class CreateAccountTests {
 	
 	@Mock
 	AccountSummaryRepository accoutRespository;
-	
+
 	@Mock
-	CustomerRepository customerRepository;
+	 CustomerRepository customerRepository;
 	
 	@InjectMocks
 	CustomerServiceImpl customerService;
@@ -34,58 +35,33 @@ public class CreateAccountTests {
 	
 	
 	
-	@Test
+	//@Test
 	public void testCreateAccount() {
 		
-		/*CustomerDTO customerDto=new CustomerDTO();
-		
-		AccountSummary accountInfo=new AccountSummary();
-		
-		
-		accountInfo.setAccountName("suma");
-		accountInfo.setClosingBalance(3000.0);
-		accountInfo.setAccountName("karna");
-		accountInfo.setAccountType("savingsAcc");
-		accountInfo.setAddress("Bangalore");
-		accountInfo.setBranchName("Ecbranch");
-		accountInfo.setClosingBalance(20.0);
-		accountInfo.setDob("14-12-1990");
-		accountInfo.setRole("Admin");
-		//accountInfo.setAccountNo(1234L);
-		
-		AccountSummary accountInfo1=new AccountSummary();
+		CustomerDTO dto=new CustomerDTO();
+		UserResponse response=new UserResponse();
+		Transaction transaction=new Transaction();
 		
 		
-		accountInfo1.setAccountNo(1234L);
-		accountInfo1.setAccountName("suma");
-		accountInfo1.setClosingBalance(3000.0);
+		AccountSummary createAcct=new AccountSummary();
 		
+		createAcct.setAccountNo(1234L);
 		
-		CustomerInfo customerinfo=new CustomerInfo();
-		customerinfo.setUserName("karnasder");
-		customerinfo.setPassword("Ecbranch5645324");
+		dto.setAccountName("suma");
+		dto.setAccountType("savings");
+		dto.setAddress("Bangalore");
+		dto.setBranchName("HDFC");
+		dto.setClosingBalance(50000.0);
+		dto.setDob("12-02-1989");
+		dto.setEmailId("suma@gmail.com");
+		dto.setRole("customer");
 		
-		customerDto.setAccountName("karna");
-		customerDto.setAccountType("savingsAcc");
-		customerDto.setAddress("Bangalore");
-		customerDto.setBranchName("Ecbranch");
-		customerDto.setClosingBalance(20.0);
-		customerDto.setDob("14-12-1990");
-		customerDto.setRole("Admin");
-		customerDto.setAccountNo(1234L);
+		Mockito.when(accoutRespository.save(createAcct)).thenReturn(createAcct);
+	//	Mockito.when(transationRepository.save(transaction)).thenReturn(transaction);
+		response=customerService.createAccount(dto);
+		Assert.assertEquals("sumasder", response.getUserName());
+		Assert.assertEquals("HDFC5645324", response.getPassword());
 		
-		Mockito.when(accoutRespository.save(accountInfo)).thenReturn(accountInfo1);
-		
-		//Mockito.when(customerRepository.save(customerinfo)).thenReturn(customerinfo);
-		 
-		UserResponse response=customerService.createAccount(customerDto);
-		
-		
-		Assert.assertEquals(customerinfo.getUserName(), response.getUserName());
-	
-		Assert.assertEquals(customerinfo.getPassword(), response.getPassword());
-		
-		*/
 		
 	}
 	

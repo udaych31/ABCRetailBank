@@ -15,9 +15,12 @@ import org.mockito.junit.MockitoJUnitRunner;
 import com.hcl.ing.retialbank.app.dto.AccountSummaryResponse;
 import com.hcl.ing.retialbank.app.dto.AccountUpdateRequest;
 import com.hcl.ing.retialbank.app.dto.AccountUpdateResponse;
+import com.hcl.ing.retialbank.app.dto.ManagePayeeDto;
 import com.hcl.ing.retialbank.app.dto.SearchRequest;
 import com.hcl.ing.retialbank.app.entity.AccountSummary;
+import com.hcl.ing.retialbank.app.entity.ManagePayee;
 import com.hcl.ing.retialbank.app.repository.AccountSummaryRepository;
+import com.hcl.ing.retialbank.app.repository.PayeeRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountServiceImplTest {
@@ -27,6 +30,12 @@ public class AccountServiceImplTest {
 	
 	@InjectMocks
 	private AccountServiceImpl serviceImpl;
+	
+	@Mock
+	private PayeeRepository payeeRepository;
+	
+	@InjectMocks
+	private PayeeServiceImpl payeeServiceImpl;
 	
 	@Test
 	public void testSearchByAccountNoOrAccountName() {
@@ -77,5 +86,33 @@ public class AccountServiceImplTest {
 		}
 		
 	}
+	
+	@Test
+	public void testPayeesList() {
+		
+		List<ManagePayeeDto> list=new ArrayList<ManagePayeeDto>();		
+		ManagePayeeDto dto=new ManagePayeeDto();
+		dto.setPayeeId(2L);
+		dto.setAccountNo(12L);
+		dto.setPayeeAccountNo(1234L);
+		dto.setPayeeName("Hari");
+		dto.setNickName("priya");				
+		list.add(dto);		
+		
+		List<ManagePayee> managePayeeLists=new ArrayList<ManagePayee>();
+		ManagePayee managePayee=new ManagePayee();
+		managePayee.setPayeeId(2L);
+		managePayee.setAccountNo(12L);
+		managePayee.setPayeeAccountNo(1234L);
+		managePayee.setPayeeName("Hari");
+		managePayee.setNickName("priya");		
+		managePayeeLists.add(managePayee);
+		
+		when(payeeRepository.findByAccountNo(1234L)).thenReturn(managePayeeLists);
+		 List<ManagePayeeDto> payesList = payeeServiceImpl.getPayeesList(1234L);
+		assertEquals(list.size(), payesList.size());
+		
+	}
+	
 
 }
