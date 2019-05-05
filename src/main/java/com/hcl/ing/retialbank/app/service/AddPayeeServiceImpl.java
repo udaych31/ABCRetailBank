@@ -52,7 +52,7 @@ public class AddPayeeServiceImpl implements AddPayeeService {
 				managePayee.setPayeeAccountNo(payee.getPayeeAccountNo());
 				managePayee.setPayeeName(payee.getPayeeName());
 				TempPayee save = tempPayeeRepository.save(managePayee);
-				reference.setReferenceNo(save.getAccountNo());
+				reference.setReferenceNo(save.getPayeeId());
 				reference.setMessage("OTP send successfully .. ! Use this reference no for adding payee..!");
 			}
 		}
