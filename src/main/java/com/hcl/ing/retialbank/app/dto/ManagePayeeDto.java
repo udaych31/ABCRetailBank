@@ -1,33 +1,18 @@
 package com.hcl.ing.retialbank.app.dto;
 
-import java.io.Serializable;
-
-public class ManagePayeeDto implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class ManagePayeeDto {
 	
-
-	private Long payeeId;
+	
 	
 	private Long accountNo;
 	
+	
 	private String payeeName;
+	
 	
 	private Long payeeAccountNo;
 	
 	private String nickName;
-	
-	public ManagePayeeDto() {
-		super();
-	}
-
-	public Long getPayeeId() {
-		return payeeId;
-	}
-
-	public void setPayeeId(Long payeeId) {
-		this.payeeId = payeeId;
-	}
 
 	public Long getAccountNo() {
 		return accountNo;
@@ -61,23 +46,7 @@ public class ManagePayeeDto implements Serializable {
 		this.nickName = nickName;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("ManagePayee [payeeId=");
-		builder.append(payeeId);
-		builder.append(", accountNo=");
-		builder.append(accountNo);
-		builder.append(", payeeName=");
-		builder.append(payeeName);
-		builder.append(", payeeAccountNo=");
-		builder.append(payeeAccountNo);
-		builder.append(", nickName=");
-		builder.append(nickName);
-		builder.append("]");
-		return builder.toString();
-	}
 	
 	
-
+	
 }
