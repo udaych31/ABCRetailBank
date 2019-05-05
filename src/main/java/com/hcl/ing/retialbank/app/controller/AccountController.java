@@ -19,12 +19,16 @@ import com.hcl.ing.retialbank.app.dto.AccountResponse;
 import com.hcl.ing.retialbank.app.dto.AccountSummaryResponse;
 import com.hcl.ing.retialbank.app.dto.AccountUpdateRequest;
 import com.hcl.ing.retialbank.app.dto.AccountUpdateResponse;
+import com.hcl.ing.retialbank.app.dto.AddPayeeReference;
+import com.hcl.ing.retialbank.app.dto.ConfirmPayeeRequest;
 import com.hcl.ing.retialbank.app.dto.CustomerDTO;
+import com.hcl.ing.retialbank.app.dto.ManagePayeeDTO;
 import com.hcl.ing.retialbank.app.dto.OtpRequest;
 import com.hcl.ing.retialbank.app.dto.SearchRequest;
 import com.hcl.ing.retialbank.app.dto.TransactionDto;
 import com.hcl.ing.retialbank.app.dto.UserResponse;
 import com.hcl.ing.retialbank.app.service.AccountServiceImpl;
+import com.hcl.ing.retialbank.app.service.AddPayeeServiceImpl;
 import com.hcl.ing.retialbank.app.service.CustomerServiceImpl;
 import com.hcl.ing.retialbank.app.service.ExcelGenerator;
 
@@ -37,6 +41,9 @@ public class AccountController {
 	
 	@Autowired
 	private CustomerServiceImpl customerService;
+	
+	@Autowired
+	private AddPayeeServiceImpl addPayeeService;
 	
 	@PostMapping("/searchbyaccnoaccname")
 	public AccountSummaryResponse searchByAccountNoOrAccountName(@RequestBody SearchRequest request) {
@@ -84,8 +91,19 @@ public class AccountController {
 	@GetMapping("/sendotp")
 	public  String accountDetails(@RequestBody OtpRequest request) {
 		accountServiceImpl.sendOtp(request);
-		
 		return "otp generated successfully";
+	}
+	
+	@PostMapping("/addpayee")
+	public  AddPayeeReference addPayee(@RequestBody ManagePayeeDTO managePayeeDTO) {
+		AddPayeeReference response=addPayeeService.addPayee(managePayeeDTO);	
+		return response;
+	}
+	
+	@PostMapping("/confirmpayee")
+	public  String confirmPayee(@RequestBody ConfirmPayeeRequest request) {
+		String response=addPayeeService.confirmPayee(request);	
+		return response;
 	}
 
 

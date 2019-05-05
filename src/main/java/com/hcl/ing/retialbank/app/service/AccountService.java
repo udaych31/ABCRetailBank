@@ -8,6 +8,8 @@ import com.hcl.ing.retialbank.app.dto.AccountUpdateResponse;
 import com.hcl.ing.retialbank.app.dto.OtpRequest;
 import com.hcl.ing.retialbank.app.dto.SearchRequest;
 import com.hcl.ing.retialbank.app.dto.TransactionDto;
+import com.hcl.ing.retialbank.app.dto.ValidateOtpRequest;
+import com.hcl.ing.retialbank.app.entity.OtpDetails;
 
 public interface AccountService {
 	
@@ -17,7 +19,9 @@ public interface AccountService {
 	
 	public List<TransactionDto> getRecentTransaction(Long accountNo);
 	
-	public void sendOtp(OtpRequest request);
+	public boolean sendOtp(OtpRequest request);
+	
+	public OtpDetails validateOtp(ValidateOtpRequest otp);
 	
 	
 
