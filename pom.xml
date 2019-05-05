@@ -74,12 +74,7 @@
 	    </dependency>
 
 	</dependencies>
-		<distributionManagement>
-  <snapshotRepository>
-    <id>nexus</id>
-    <url>http://35.154.25.173:8081/repository/Retails/</url>
-  </snapshotRepository>
-</distributionManagement>
+
 
 	<build>
 		<plugins>
