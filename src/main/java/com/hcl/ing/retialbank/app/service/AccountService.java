@@ -5,6 +5,7 @@ import java.util.List;
 import com.hcl.ing.retialbank.app.dto.AccountSummaryResponse;
 import com.hcl.ing.retialbank.app.dto.AccountUpdateRequest;
 import com.hcl.ing.retialbank.app.dto.AccountUpdateResponse;
+import com.hcl.ing.retialbank.app.dto.OtpRequest;
 import com.hcl.ing.retialbank.app.dto.SearchRequest;
 import com.hcl.ing.retialbank.app.dto.TransactionDto;
 
@@ -15,6 +16,8 @@ public interface AccountService {
 	public AccountUpdateResponse updateAccountDetails(AccountUpdateRequest request);
 	
 	public List<TransactionDto> getRecentTransaction(Long accountNo);
+	
+	public void sendOtp(OtpRequest request);
 	
 	
 

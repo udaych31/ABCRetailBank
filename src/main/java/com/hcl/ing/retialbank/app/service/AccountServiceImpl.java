@@ -10,6 +10,7 @@ import com.hcl.ing.retialbank.app.dto.AccountSummaryDto;
 import com.hcl.ing.retialbank.app.dto.AccountSummaryResponse;
 import com.hcl.ing.retialbank.app.dto.AccountUpdateRequest;
 import com.hcl.ing.retialbank.app.dto.AccountUpdateResponse;
+import com.hcl.ing.retialbank.app.dto.OtpRequest;
 import com.hcl.ing.retialbank.app.dto.SearchRequest;
 import com.hcl.ing.retialbank.app.dto.TransactionDto;
 import com.hcl.ing.retialbank.app.entity.AccountSummary;
@@ -17,6 +18,7 @@ import com.hcl.ing.retialbank.app.entity.Transaction;
 import com.hcl.ing.retialbank.app.repository.AccountSummaryRepository;
 import com.hcl.ing.retialbank.app.repository.CustomerRepository;
 import com.hcl.ing.retialbank.app.repository.TransactionRepository;
+import com.hcl.ing.retialbank.app.util.EmailSender;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -29,6 +31,9 @@ public class AccountServiceImpl implements AccountService {
 	
 	@Autowired
 	private TransactionRepository transactionRepository;
+	
+	@Autowired
+	private EmailSender emailSender;
 	
 
 	@Override
@@ -123,5 +128,14 @@ public class AccountServiceImpl implements AccountService {
 			
 		}
 		return response;
+	}
+	
+	@Override
+	public void sendOtp(OtpRequest request) {
+		try {
+			emailSender.sendOtp(request);
+		} catch (Exception e) {
+			
+		}
 	}
 }
