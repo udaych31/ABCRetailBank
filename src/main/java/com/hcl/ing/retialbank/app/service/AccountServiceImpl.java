@@ -142,7 +142,7 @@ public class AccountServiceImpl implements AccountService {
 			emailSender.sendOtp(request);
 			return true;
 		} catch (Exception e) {
-			
+			System.out.println("send otp failed :"+e.getMessage());
 		}
 		return false;
 	}
