@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hcl.ing.retialbank.app.dto.TransactionResponse;
-import com.hcl.ing.retialbank.app.entity.Transaction;
 import com.hcl.ing.retialbank.app.pojo.TransactionPojo;
 import com.hcl.ing.retialbank.app.service.TransactionService;
 

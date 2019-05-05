@@ -114,7 +114,8 @@ public class CustomerServiceImpl implements CustomerService {
 			 
 		  
 		 response.setPassword(customer.getPassword());
-		 response.setUserName(customer.getUserName());	
+		 response.setUserName(customer.getUserName());
+		 response.setMessage("Account created successfully");
 		 
 		 }
 		 
