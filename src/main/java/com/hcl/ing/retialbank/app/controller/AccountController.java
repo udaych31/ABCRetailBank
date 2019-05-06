@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,11 +23,16 @@ import com.hcl.ing.retialbank.app.dto.AccountUpdateResponse;
 import com.hcl.ing.retialbank.app.dto.AddPayeeReference;
 import com.hcl.ing.retialbank.app.dto.ConfirmPayeeRequest;
 import com.hcl.ing.retialbank.app.dto.CustomerDTO;
+import com.hcl.ing.retialbank.app.dto.DeletePayeeConfirm;
+import com.hcl.ing.retialbank.app.dto.DeleteResponse;
+
 import com.hcl.ing.retialbank.app.dto.ManagePayeeDto;
+
 import com.hcl.ing.retialbank.app.dto.OtpRequest;
 import com.hcl.ing.retialbank.app.dto.SearchRequest;
 import com.hcl.ing.retialbank.app.dto.TransactionDto;
 import com.hcl.ing.retialbank.app.dto.UserResponse;
+import com.hcl.ing.retialbank.app.pojo.ManagePayeePojo;
 import com.hcl.ing.retialbank.app.service.AccountServiceImpl;
 import com.hcl.ing.retialbank.app.service.AddPayeeServiceImpl;
 import com.hcl.ing.retialbank.app.service.CustomerServiceImpl;
@@ -128,6 +134,20 @@ public class AccountController {
 		accountServiceImpl.sendOtp(request);
 		return "otp generated successfully";
 	}
+
+	@DeleteMapping("/payee/deletepayee")
+	public  DeleteResponse deletepayee(@RequestBody ManagePayeePojo managePayeePojo) {
+		DeleteResponse response=accountServiceImpl.deletepayee(managePayeePojo);
+		
+		return response;
+	}
+	
+	@DeleteMapping("/payee/deletepayeeconfirmation")
+	public  DeleteResponse deletepayeeConfirmation(@RequestBody DeletePayeeConfirm deletePayeeConfirm) {
+		DeleteResponse response=accountServiceImpl.deletePayeeConfirm(deletePayeeConfirm);
+		
+		return response;
+	}
 	
 	@PostMapping("/addpayee")
 	public  AddPayeeReference addPayee(@RequestBody ManagePayeeDto managePayeeDTO) {
@@ -140,6 +160,7 @@ public class AccountController {
 		String response=addPayeeService.confirmPayee(request);	
 		return response;
 	}
+
 
 
 }
