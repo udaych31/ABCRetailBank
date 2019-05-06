@@ -3,10 +3,11 @@ package com.hcl.ing.retialbank.app.pojo;
 public class ManagePayeePojo {
 	private Long payeeAccountNo;
 
-	private Long otp;
-	
 	private Long accountNo;
 	
+	public ManagePayeePojo() {
+		super();
+	}
 
 	public Long getAccountNo() {
 		return accountNo;
@@ -24,12 +25,18 @@ public class ManagePayeePojo {
 		this.payeeAccountNo = payeeAccountNo;
 	}
 
-	public Long getOtp() {
-		return otp;
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ManagePayeePojo [payeeAccountNo=");
+		builder.append(payeeAccountNo);
+		builder.append(", accountNo=");
+		builder.append(accountNo);
+		builder.append("]");
+		return builder.toString();
 	}
+	
+	
 
-	public void setOtp(Long otp) {
-		this.otp = otp;
-	}
 	
 }

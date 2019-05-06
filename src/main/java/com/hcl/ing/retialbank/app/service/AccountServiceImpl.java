@@ -10,6 +10,7 @@ import com.hcl.ing.retialbank.app.dto.AccountSummaryDto;
 import com.hcl.ing.retialbank.app.dto.AccountSummaryResponse;
 import com.hcl.ing.retialbank.app.dto.AccountUpdateRequest;
 import com.hcl.ing.retialbank.app.dto.AccountUpdateResponse;
+import com.hcl.ing.retialbank.app.dto.DeletePayeeConfirm;
 import com.hcl.ing.retialbank.app.dto.DeleteResponse;
 import com.hcl.ing.retialbank.app.dto.OtpRequest;
 import com.hcl.ing.retialbank.app.dto.SearchRequest;
@@ -18,6 +19,7 @@ import com.hcl.ing.retialbank.app.dto.ValidateOtpRequest;
 import com.hcl.ing.retialbank.app.entity.AccountSummary;
 import com.hcl.ing.retialbank.app.entity.ManagePayee;
 import com.hcl.ing.retialbank.app.entity.OtpDetails;
+import com.hcl.ing.retialbank.app.entity.TempPayee;
 import com.hcl.ing.retialbank.app.entity.Transaction;
 import com.hcl.ing.retialbank.app.pojo.ManagePayeePojo;
 import com.hcl.ing.retialbank.app.repository.AccountSummaryRepository;
@@ -41,10 +43,13 @@ public class AccountServiceImpl implements AccountService {
 
 	@Autowired
 	private EmailSender emailSender;
+	
 	@Autowired
 	ManagePayeeRepository managePayeeRepository;
-	@Autowired
+	
+	@Autowired	
 	OtpRepository otpRepository;
+	
 	@Override
 	public AccountSummaryResponse searchByAccountNoOrAccountName(SearchRequest request) {
 		AccountSummaryResponse response = new AccountSummaryResponse();
@@ -152,33 +157,22 @@ public class AccountServiceImpl implements AccountService {
 
 		DeleteResponse deleteResponse = new DeleteResponse();
 		ManagePayee managePayeeToBeDeleted = managePayeeRepository.findByPayeeAccountNo(managePayeePojo.getPayeeAccountNo());
-		OtpDetails otpDetails = otpRepository.findByAccountNo(managePayeePojo.getAccountNo());
-		if (managePayeeToBeDeleted != null && otpDetails != null) {
-
-			if (managePayeePojo.getAccountNo().longValue() == otpDetails.getAccountNo().longValue()) {
-				if (otpDetails.getOtp().longValue()== managePayeePojo.getOtp().longValue()) {
-					if (otpDetails.getOtpUsed().equals('N')) {
-						managePayeeRepository.delete(managePayeeToBeDeleted);
-						otpDetails.setOtpUsed('Y');
-						otpRepository.save(otpDetails);
-						deleteResponse.setMessage("the payee has been deleted");
-
-					} else {
-						deleteResponse.setMessage("the otp is already used");
-
-					}
-				} else {
-					deleteResponse.setMessage("given wrong OTP");
-				}
-			} else {
-				deleteResponse.setMessage("account number is wrong");
+		AccountSummary account = accountSummaryRepository.findByAccountNo(managePayeePojo.getAccountNo());
+		
+		if(managePayeeToBeDeleted!=null && account!=null) {
+			OtpRequest request=new OtpRequest();
+			request.setAccountNo(managePayeePojo.getAccountNo());
+			request.setEmail(account.getEmail());
+			boolean sendOtp = sendOtp(request);
+			if(sendOtp) {
+				deleteResponse.setMessage("OTP send successfully .. !");
+			}else {
+				deleteResponse.setMessage("Some thing wrong please try again .. !");
 			}
-		} else {
-			deleteResponse.setMessage("account numbers not exist");
+		}else {
+			deleteResponse.setMessage("Account/Payee does not exist .. !");
 		}
-
 		return deleteResponse;
-
 		
 	}
 	
@@ -187,13 +181,37 @@ public class AccountServiceImpl implements AccountService {
 		OtpDetails otp=null;
 		try {
 			otp = otpRepository.findByAccountNo(request.getAccountNo());
-			if(otp!=null && otp.getOtp()==request.getOtp()) {
+			if(otp!=null && otp.getOtp().longValue()==request.getOtp().longValue()) {
 				return otp;
 			}
 		} catch (Exception e) {
 		}
 		return otp;
 
+	}
+
+	public DeleteResponse deletePayeeConfirm(DeletePayeeConfirm deletePayeeConfirm) {
+
+		DeleteResponse deleteResponse = new DeleteResponse();
+		
+		ValidateOtpRequest request=new ValidateOtpRequest();
+		request.setAccountNo(deletePayeeConfirm.getAccountNo());
+		request.setOtp(deletePayeeConfirm.getOtp());
+		OtpDetails validateOtp = validateOtp(request);
+		if(validateOtp!=null) {
+			boolean managePayeeToBeDeleted = managePayeeRepository.deleteByPayeeId(deletePayeeConfirm.getPayeeId());
+			if(managePayeeToBeDeleted) {
+				deleteResponse.setMessage("Payee deleted successfully ...!");
+			}else {
+				deleteResponse.setMessage("Payee not deleted successfully ...!");
+			}
+			
+		}else {
+			deleteResponse.setMessage("OTP is invalid ...!");
+		}
+		
+		
+		return deleteResponse;
 	}
 	
 }

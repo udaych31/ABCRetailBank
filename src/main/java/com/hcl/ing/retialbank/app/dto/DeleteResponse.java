@@ -1,14 +1,33 @@
 package com.hcl.ing.retialbank.app.dto;
 
-public class DeleteResponse {
-String message;
+import java.io.Serializable;
 
-public String getMessage() {
-	return message;
-}
+public class DeleteResponse implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
+	private String message;
+	
+	public DeleteResponse() {
+		super();
+	}
 
-public void setMessage(String message) {
-	this.message = message;
-}
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("DeleteResponse [message=");
+		builder.append(message);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
 
 }

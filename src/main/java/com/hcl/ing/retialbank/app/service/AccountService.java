@@ -5,6 +5,7 @@ import java.util.List;
 import com.hcl.ing.retialbank.app.dto.AccountSummaryResponse;
 import com.hcl.ing.retialbank.app.dto.AccountUpdateRequest;
 import com.hcl.ing.retialbank.app.dto.AccountUpdateResponse;
+import com.hcl.ing.retialbank.app.dto.DeletePayeeConfirm;
 import com.hcl.ing.retialbank.app.dto.DeleteResponse;
 import com.hcl.ing.retialbank.app.dto.OtpRequest;
 import com.hcl.ing.retialbank.app.dto.SearchRequest;
@@ -31,6 +32,8 @@ public interface AccountService {
 	public boolean sendOtp(OtpRequest request);
 	
 	public OtpDetails validateOtp(ValidateOtpRequest otp);
+	
+	public DeleteResponse deletePayeeConfirm(DeletePayeeConfirm deletePayeeConfirm);
 	
 
 

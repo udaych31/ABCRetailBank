@@ -23,7 +23,7 @@ import com.hcl.ing.retialbank.app.dto.AccountUpdateResponse;
 import com.hcl.ing.retialbank.app.dto.AddPayeeReference;
 import com.hcl.ing.retialbank.app.dto.ConfirmPayeeRequest;
 import com.hcl.ing.retialbank.app.dto.CustomerDTO;
-
+import com.hcl.ing.retialbank.app.dto.DeletePayeeConfirm;
 import com.hcl.ing.retialbank.app.dto.DeleteResponse;
 
 import com.hcl.ing.retialbank.app.dto.ManagePayeeDto;
@@ -138,6 +138,13 @@ public class AccountController {
 	@DeleteMapping("/payee/deletepayee")
 	public  DeleteResponse deletepayee(@RequestBody ManagePayeePojo managePayeePojo) {
 		DeleteResponse response=accountServiceImpl.deletepayee(managePayeePojo);
+		
+		return response;
+	}
+	
+	@DeleteMapping("/payee/deletepayeeconfirmation")
+	public  DeleteResponse deletepayeeConfirmation(@RequestBody DeletePayeeConfirm deletePayeeConfirm) {
+		DeleteResponse response=accountServiceImpl.deletePayeeConfirm(deletePayeeConfirm);
 		
 		return response;
 	}

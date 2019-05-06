@@ -14,5 +14,7 @@ public interface ManagePayeeRepository extends JpaRepository<ManagePayee, Long>{
     ManagePayee findByPayeeAccountNo(Long payeeAccountNo);
 
 	public ManagePayee findByAccountNo(Long accno);
+	
+	public boolean deleteByPayeeId(Long payeeId);
 
 }
