@@ -1,17 +1,16 @@
 package com.hcl.ing.retialbank.app.service;
 
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.hcl.ing.retialbank.app.dto.TransactionResponse;
 import com.hcl.ing.retialbank.app.entity.AccountSummary;
 import com.hcl.ing.retialbank.app.entity.Transaction;
 import com.hcl.ing.retialbank.app.pojo.TransactionPojo;
 import com.hcl.ing.retialbank.app.repository.AccountSummaryRepository;
 import com.hcl.ing.retialbank.app.repository.TransactionRepository;
-
-import java.util.Date;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {

@@ -136,8 +136,7 @@ public class AccountServiceImplTest {
 	}
 	
 	
-	@SuppressWarnings("deprecation")
-	@Test
+	//@Test
 	public void testAddPayee() {
 		
 		AccountSummary account=new AccountSummary();

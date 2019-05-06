@@ -200,8 +200,9 @@ public class AccountServiceImpl implements AccountService {
 		request.setOtp(deletePayeeConfirm.getOtp());
 		OtpDetails validateOtp = validateOtp(request);
 		if(validateOtp!=null) {
-			boolean managePayeeToBeDeleted = managePayeeRepository.deleteByPayeeId(deletePayeeConfirm.getPayeeId());
-			if(managePayeeToBeDeleted) {
+			Integer managePayeeToBeDeleted = managePayeeRepository.deleteByPayeeId(deletePayeeConfirm.getPayeeId());
+			System.out.println(managePayeeToBeDeleted);
+			if(managePayeeToBeDeleted!=null) {
 				deleteResponse.setMessage("Payee deleted successfully ...!");
 			}else {
 				deleteResponse.setMessage("Payee not deleted successfully ...!");
