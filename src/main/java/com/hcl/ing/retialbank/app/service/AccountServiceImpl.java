@@ -18,7 +18,6 @@ import com.hcl.ing.retialbank.app.entity.AccountSummary;
 import com.hcl.ing.retialbank.app.entity.OtpDetails;
 import com.hcl.ing.retialbank.app.entity.Transaction;
 import com.hcl.ing.retialbank.app.repository.AccountSummaryRepository;
-import com.hcl.ing.retialbank.app.repository.CustomerRepository;
 import com.hcl.ing.retialbank.app.repository.OtpRepository;
 import com.hcl.ing.retialbank.app.repository.TransactionRepository;
 import com.hcl.ing.retialbank.app.util.EmailSender;
@@ -29,9 +28,7 @@ public class AccountServiceImpl implements AccountService {
 	@Autowired
 	private AccountSummaryRepository accountSummaryRepository; 
 	
-	@Autowired
-	private CustomerRepository customerRepository;
-	
+
 	@Autowired
 	private TransactionRepository transactionRepository;
 	
@@ -142,7 +139,7 @@ public class AccountServiceImpl implements AccountService {
 			emailSender.sendOtp(request);
 			return true;
 		} catch (Exception e) {
-			
+			System.out.println("send otp failed :"+e.getMessage());
 		}
 		return false;
 	}
@@ -152,7 +149,7 @@ public class AccountServiceImpl implements AccountService {
 		OtpDetails otp=null;
 		try {
 			otp = otpRepository.findByAccountNo(request.getAccountNo());
-			if(otp!=null && otp.getOtp()==request.getOtp()) {
+			if(otp!=null && otp.getOtp().longValue()==request.getOtp().longValue()) {
 				return otp;
 			}
 		} catch (Exception e) {
