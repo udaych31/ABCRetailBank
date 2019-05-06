@@ -1,6 +1,5 @@
 package com.hcl.ing.retialbank.app.service;
 
-
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +15,8 @@ import com.hcl.ing.retialbank.app.entity.CustomerInfo;
 import com.hcl.ing.retialbank.app.entity.Transaction;
 import com.hcl.ing.retialbank.app.repository.AccountSummaryRepository;
 import com.hcl.ing.retialbank.app.repository.CustomerRepository;
+import com.hcl.ing.retialbank.app.repository.ManagePayeeRepository;
+import com.hcl.ing.retialbank.app.repository.OtpRepository;
 import com.hcl.ing.retialbank.app.repository.TransactionRepository;
 
 @Service
@@ -23,13 +24,18 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	CustomerRepository customerRepository;
-	
+
 	@Autowired
 	AccountSummaryRepository accoutRespository;
-	
+
 	@Autowired
 	TransactionRepository transationRepository;
- 
+
+	@Autowired
+	ManagePayeeRepository managePayeeRepository;
+	@Autowired
+	OtpRepository otpRepository;
+
 	@Override
 	public CustomerResponse loginUser(String username, String password) {
 		CustomerResponse response = new CustomerResponse();
@@ -66,10 +72,8 @@ public class CustomerServiceImpl implements CustomerService {
 
 		}
 		return response;
-	}	 
-		
-	  
-	  
+	}
+
 	@Override
 	public UserResponse createAccount(CustomerDTO customerDto) {
 		
@@ -132,21 +136,21 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 
+		
+		
 
 	@Override
 	public AccountResponse accountDetails(String userName) {
-		
-		  AccountResponse response=new AccountResponse();
 
-		   CustomerInfo accno=customerRepository.findByUserName(userName);
-		   response.setAccNo(accno.getAccno());	   
-		  AccountSummary value= accoutRespository.findByAccountNo(accno.getAccno());
-		  response.setBalance(value.getClosingBalance());   
+		AccountResponse response = new AccountResponse();
 
-		
-		 return response ;
-	
+		CustomerInfo accno = customerRepository.findByUserName(userName);
+		response.setAccNo(accno.getAccno());
+		AccountSummary value = accoutRespository.findByAccountNo(accno.getAccno());
+		response.setBalance(value.getClosingBalance());
 
-}
-}
+		return response;
 
+	}
+
+	}

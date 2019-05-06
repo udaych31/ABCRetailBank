@@ -6,21 +6,31 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.hcl.ing.retialbank.app.dto.AccountSummaryResponse;
 import com.hcl.ing.retialbank.app.dto.AccountUpdateRequest;
 import com.hcl.ing.retialbank.app.dto.AccountUpdateResponse;
+import com.hcl.ing.retialbank.app.dto.AddPayeeReference;
 import com.hcl.ing.retialbank.app.dto.ManagePayeeDto;
+import com.hcl.ing.retialbank.app.dto.OtpRequest;
 import com.hcl.ing.retialbank.app.dto.SearchRequest;
 import com.hcl.ing.retialbank.app.entity.AccountSummary;
 import com.hcl.ing.retialbank.app.entity.ManagePayee;
+import com.hcl.ing.retialbank.app.entity.OtpDetails;
+import com.hcl.ing.retialbank.app.entity.TempPayee;
 import com.hcl.ing.retialbank.app.repository.AccountSummaryRepository;
+import com.hcl.ing.retialbank.app.repository.OtpRepository;
 import com.hcl.ing.retialbank.app.repository.PayeeRepository;
+import com.hcl.ing.retialbank.app.repository.TempPayeeRepository;
+import com.hcl.ing.retialbank.app.util.EmailSender;
+
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountServiceImplTest {
@@ -36,6 +46,17 @@ public class AccountServiceImplTest {
 	
 	@InjectMocks
 	private PayeeServiceImpl payeeServiceImpl;
+	
+	@InjectMocks
+	private AddPayeeServiceImpl addPayeeServiceImpl;
+	
+	@Mock
+	TempPayeeRepository tempPayeeRepository;
+	@Mock
+	private OtpRepository otpRepository;
+	
+	@Mock
+	private EmailSender emailSender;
 	
 	@Test
 	public void testSearchByAccountNoOrAccountName() {
@@ -114,5 +135,39 @@ public class AccountServiceImplTest {
 		
 	}
 	
+	
+	//@Test
+	public void testAddPayee() {
+		
+		AccountSummary account=new AccountSummary();
+		account.setAccountNo(1234L);
+		account.setEmail("madhurya.suma@gmail.com");
+		
+		OtpDetails request=new OtpDetails();
+		request.setAccountNo(1L);
+		
+		OtpRequest otp=new OtpRequest();
+		otp.setAccountNo(1L);
+		TempPayee managePayee = new TempPayee();
+		managePayee.setPayeeId(1L);
+		
+		ManagePayeeDto payee=new ManagePayeeDto();
+		payee.setAccountNo(1234L);
+		payee.setNickName("suma");
+		payee.setPayeeAccountNo(123L);
+		payee.setPayeeName("karna");
+		
+		
+		Mockito.when(accountRepository.findByAccountNo(payee.getAccountNo())).thenReturn(account);
+		Mockito.when(otpRepository.findByAccountNo(otp.getAccountNo())).thenReturn(request);
+		Mockito.when(tempPayeeRepository.save(managePayee)).thenReturn(managePayee);
+		
+		
+		AddPayeeReference reference =addPayeeServiceImpl.addPayee(payee);
+		Assert.assertEquals("OTP send successfully .. ! Use this reference no for adding payee..!", reference.getMessage());
+		 
+		
+		
+	}
 
 }
